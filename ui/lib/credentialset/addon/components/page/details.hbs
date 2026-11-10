@@ -18,6 +18,8 @@
     <div class="toolbar-separator"></div>
     <ConfirmAction
       @buttonClasses="toolbar-link"
+      @confirmTitle="Rotate now?"
+      @confirmButtonText="Rotate"
       @confirmMessage="The next slot becomes active now and the schedule continues from this moment. The previous credential stays valid for the overlap period."
       @onConfirmAction={{perform this.rotate}}
       data-test-rotate
