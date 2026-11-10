@@ -18,6 +18,7 @@ import (
 	dbMysql "github.com/openbao/openbao/v2/internal/builtin/database/mysql"
 	dbPostgres "github.com/openbao/openbao/v2/internal/builtin/database/postgresql"
 	dbValkey "github.com/openbao/openbao/v2/internal/builtin/database/valkey"
+	logicalCredSet "github.com/openbao/openbao/v2/internal/builtin/logical/credentialset"
 	logicalKube "github.com/openbao/openbao/v2/internal/builtin/logical/kubernetes"
 	logicalKv "github.com/openbao/openbao/v2/internal/builtin/logical/kv"
 	logicalPki "github.com/openbao/openbao/v2/internal/builtin/logical/pki"
@@ -78,13 +79,14 @@ func newRegistry() *registry {
 			"valkey-database-plugin":     {Factory: dbValkey.New},
 		},
 		logicalBackends: map[string]logicalBackend{
-			"kubernetes": {Factory: logicalKube.Factory},
-			"kv":         {Factory: logicalKv.Factory},
-			"pki":        {Factory: logicalPki.Factory},
-			"rabbitmq":   {Factory: logicalRabbit.Factory},
-			"ssh":        {Factory: logicalSsh.Factory},
-			"totp":       {Factory: logicalTotp.Factory},
-			"transit":    {Factory: logicalTransit.Factory},
+			"credentialset": {Factory: logicalCredSet.Factory},
+			"kubernetes":    {Factory: logicalKube.Factory},
+			"kv":            {Factory: logicalKv.Factory},
+			"pki":           {Factory: logicalPki.Factory},
+			"rabbitmq":      {Factory: logicalRabbit.Factory},
+			"ssh":           {Factory: logicalSsh.Factory},
+			"totp":          {Factory: logicalTotp.Factory},
+			"transit":       {Factory: logicalTransit.Factory},
 		},
 	}
 

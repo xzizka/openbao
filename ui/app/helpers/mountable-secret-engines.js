@@ -7,6 +7,13 @@ import { helper as buildHelper } from '@ember/component/helper';
 
 const MOUNTABLE_SECRET_ENGINES = [
   {
+    displayName: 'Credential Sets',
+    type: 'credentialset',
+    glyph: 'key',
+    engineRoute: 'credentialset.overview',
+    category: 'generic',
+  },
+  {
     displayName: 'Databases',
     type: 'database',
     category: 'infra',

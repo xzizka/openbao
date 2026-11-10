@@ -531,6 +531,30 @@ importers:
         specifier: '*'
         version: 2.0.0
 
+  lib/credentialset:
+    dependencies:
+      '@ember/test-waiters':
+        specifier: '*'
+        version: 3.1.0
+      ember-auto-import:
+        specifier: '*'
+        version: 2.10.0(@glint/template@1.9.0)(webpack@5.110.3(postcss@8.5.28))
+      ember-cli-babel:
+        specifier: '*'
+        version: 8.3.2(@babel/core@7.29.7)
+      ember-cli-htmlbars:
+        specifier: '*'
+        version: 6.3.0
+      ember-concurrency:
+        specifier: '*'
+        version: 2.3.4(@babel/core@7.29.7)
+      ember-engines:
+        specifier: '*'
+        version: 0.13.1(@glint/template@1.9.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.29.7))(@glint/template@1.9.0)(rsvp@4.8.5)(webpack@5.110.3(postcss@8.5.28)))
+      ember-inflector:
+        specifier: '*'
+        version: 4.0.2
+
   lib/css: {}
 
   lib/keep-gitkeep: {}
@@ -10073,7 +10097,7 @@ snapshots:
 
   '@types/minimatch@6.0.0':
     dependencies:
-      minimatch: 7.4.9
+      minimatch: 10.2.6
 
   '@types/minimist@1.2.5': {}
 

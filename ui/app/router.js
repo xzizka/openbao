@@ -148,6 +148,7 @@ Router.map(function () {
       this.route('secrets', function () {
         this.route('backends', { path: '/' });
         this.route('backend', { path: '/:backend' }, function () {
+          this.mount('credentialset');
           this.mount('kmip');
           this.mount('kubernetes');
           this.mount('pki');

@@ -14,6 +14,7 @@ const SUPPORTED_SECRET_BACKENDS = [
   'ssh',
   'transit',
   'kubernetes',
+  'credentialset',
 ];
 
 export function supportedSecretBackends() {

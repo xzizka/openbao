@@ -201,6 +201,7 @@
   "ember-addon": {
     "paths": [
       "lib/core",
+      "lib/credentialset",
       "lib/css",
       "lib/keep-gitkeep",
       "lib/kubernetes",

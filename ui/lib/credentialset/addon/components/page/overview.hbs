@@ -1,0 +1,51 @@
+<PageHeader as |p|>
+  <p.top>
+    <Page::Breadcrumbs @breadcrumbs={{@breadcrumbs}} />
+  </p.top>
+  <p.levelLeft>
+    <h1 class="title is-3" data-test-header-title>
+      <Icon @name="key" @size="24" class="has-text-grey-light" />
+      {{@model.backend}}
+    </h1>
+  </p.levelLeft>
+</PageHeader>
+
+<Toolbar>
+  <ToolbarActions>
+    <ToolbarLink @route="create" @type="add" @model={{@model.backend}} data-test-create-set>
+      Create credential set
+    </ToolbarLink>
+  </ToolbarActions>
+</Toolbar>
+
+{{#if @model.sets.length}}
+  <div class="has-bottom-margin-s">
+    {{#each @model.sets as |set|}}
+      <ListItem @linkPrefix={{this.mountPoint}} @linkParams={{array "set" set.name}} as |Item|>
+        <Item.content>
+          <Icon @name="key" />
+          <span data-test-set={{set.name}}>{{set.name}}</span>
+          {{#if set.status}}
+            <span class="has-text-grey is-size-8 has-left-margin-s">
+              {{set.status.slots.length}}
+              slots, active:
+              {{or set.status.active_slot "none"}}{{if set.status.degraded " (degraded)"}}
+            </span>
+          {{else}}
+            <span class="has-text-danger is-size-8 has-left-margin-s">{{set.error}}</span>
+          {{/if}}
+        </Item.content>
+      </ListItem>
+    {{/each}}
+  </div>
+{{else}}
+  <EmptyState
+    data-test-empty-state
+    @title="No credential sets yet"
+    @message="A credential set serves one logical credential out of several slots that are rotated in turn. The previous credential stays valid for the overlap period so consumers have time to pick up the new one."
+  >
+    <LinkTo class="has-top-margin-xs" @route="create" @model={{@model.backend}}>
+      Create credential set
+    </LinkTo>
+  </EmptyState>
+{{/if}}

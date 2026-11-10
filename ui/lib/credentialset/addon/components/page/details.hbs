@@ -1,0 +1,91 @@
+<PageHeader as |p|>
+  <p.top>
+    <Page::Breadcrumbs @breadcrumbs={{@breadcrumbs}} />
+  </p.top>
+  <p.levelLeft>
+    <h1 class="title is-3" data-test-header-title>
+      <Icon @name="key" @size="24" class="has-text-grey-light" />
+      {{@model.name}}
+    </h1>
+  </p.levelLeft>
+</PageHeader>
+
+<Toolbar>
+  <ToolbarActions>
+    <ConfirmAction @buttonClasses="toolbar-link" @onConfirmAction={{perform this.delete}} data-test-delete>
+      Delete set
+    </ConfirmAction>
+    <div class="toolbar-separator"></div>
+    <ConfirmAction
+      @buttonClasses="toolbar-link"
+      @confirmMessage="The next slot becomes active now and the schedule continues from this moment. The previous credential stays valid for the overlap period."
+      @onConfirmAction={{perform this.rotate}}
+      data-test-rotate
+    >
+      Rotate now
+    </ConfirmAction>
+    <button type="button" class="toolbar-link" {{on "click" (perform this.refresh)}} data-test-refresh>Refresh</button>
+    <button type="button" class="toolbar-link" {{on "click" (perform this.reveal)}} data-test-reveal>Show current credential</button>
+  </ToolbarActions>
+</Toolbar>
+
+{{#if this.error}}
+  <MessageError @errorMessage={{this.error}} class="has-top-margin-s" />
+{{/if}}
+
+{{#if this.current.degraded}}
+  <AlertBanner
+    @type="warning"
+    @title="Degraded"
+    @message="The active slot has no credential, an older still valid credential is served until it is created."
+  />
+{{/if}}
+
+{{#if this.credentials}}
+  <div class="box is-sideless is-fullwidth has-top-margin-m" data-test-credentials>
+    <InfoTableRow @label="Username" @value={{this.credentials.username}} @addCopyButton={{true}} />
+    <InfoTableRow @label="Password">
+      <MaskedInput @value={{this.credentials.password}} @name="Password" @displayOnly={{true}} @allowCopy={{true}} />
+    </InfoTableRow>
+    <InfoTableRow @label="Slot" @value={{this.credentials.slot}} />
+    <InfoTableRow @label="Active until" @value={{this.credentials.active_until}} />
+    <InfoTableRow @label="Valid until" @value={{this.credentials.valid_until}} />
+    <button type="button" class="button has-top-margin-s" {{on "click" this.hide}}>Hide</button>
+  </div>
+{{/if}}
+
+<h2 class="title is-4 has-top-margin-l">Configuration</h2>
+<InfoTableRow @label="Slots" @value={{join ", " this.config.slots}} />
+<InfoTableRow @label="Validity" @value={{format-duration this.config.validity}} />
+<InfoTableRow @label="Overlap" @value={{format-duration this.config.overlap}} />
+<InfoTableRow @label="Prepare lead" @value={{format-duration this.config.prepare_lead}} />
+<InfoTableRow @label="Active time per slot" @value={{format-duration this.config.active_time}} />
+<InfoTableRow @label="Rotation period of one slot" @value={{format-duration this.config.rotation_period}} />
+<InfoTableRow @label="Anchor" @value={{this.config.anchor}} />
+<InfoTableRow @label="Password length" @value={{this.config.password_length}} />
+<InfoTableRow @label="Created" @value={{this.config.created}} />
+
+<h2 class="title is-4 has-top-margin-l">Slots</h2>
+<p class="has-text-grey is-size-8">Server time: {{this.current.now}}</p>
+<table class="table is-fullwidth" data-test-slots>
+  <thead>
+    <tr>
+      <th>Slot</th>
+      <th>State</th>
+      <th>Active since</th>
+      <th>Active until</th>
+      <th>Valid until</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.current.slot_states as |slot|}}
+      <tr data-test-slot={{slot.name}}>
+        <td class="is-font-mono">{{slot.name}}</td>
+        <td data-test-slot-state>{{slot.state}}</td>
+        <td>{{slot.active_since}}</td>
+        <td>{{slot.active_until}}</td>
+        <td>{{slot.valid_until}}{{if slot.last_error (concat " ! " slot.last_error)}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

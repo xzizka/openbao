@@ -1,0 +1,21 @@
+{
+  "name": "credentialset",
+  "keywords": [
+    "ember-addon",
+    "ember-engine"
+  ],
+  "dependencies": {
+    "@ember/test-waiters": "*",
+    "ember-auto-import": "*",
+    "ember-cli-babel": "*",
+    "ember-cli-htmlbars": "*",
+    "ember-concurrency": "*",
+    "ember-engines": "*",
+    "ember-inflector": "*"
+  },
+  "ember-addon": {
+    "paths": [
+      "../core"
+    ]
+  }
+}
